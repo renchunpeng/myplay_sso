@@ -1,0 +1,22 @@
+server:
+  context-path: /sso
+  port: 9999
+
+spring:
+  # 接收返回时间格式化
+  jackson:
+    date-format: yyyy-MM-dd HH:mm
+  # redis相关配置
+  redis:
+    database: 15
+    host: 127.0.0.1
+    port: 6379
+    password:
+  # freemarker相关配置
+  freemarker:
+    cache: false
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+    content-type: text/html;charset=utf-8
+
+

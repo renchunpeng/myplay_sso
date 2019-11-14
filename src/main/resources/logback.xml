@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" packagingData="true" scan="true" scanPeriod="30 seconds">
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] [%-5level] %logger{50}:%L - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>d:/rcp/myplay_log.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>d:/rcp/history/myplay.%d{yyyy-MM-dd}.log.gz</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%date [%thread] [%-5level] %logger{50}:%L - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <!--
+        所有的日志会先被logger对象一层层过滤，如果符合某个logger的规则就直接按照该logger提供的appender打印日志
+        最后等所有logger都处理完了才会轮到root
+        如果additivity为false就表示不往上级传递日志，只要被logger打印之后，root就获取不到这条日志了，如果为true不管日志本身级别是否符合root的level都会被root再打印一遍
+    -->
+    <!--com.cpren限制了只会拦截我自己写的代码，其他jar包的报错会被root拦截-->
+    <logger name="com.cpren" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root level="info">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
